@@ -7,7 +7,7 @@ on:
 
 env:
   AWS_REGION: us-east-1
-  ECR_REPOSITORY: casino-frontend
+  ECR_REPOSITORY: frontend_intro_devops_casino
 
 jobs:
   build:
@@ -84,7 +84,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
-            docker pull ${{ secrets.ECR_REGISTRY }}/casino-frontend:v1.0.${{ github.run_number }}
+            docker pull ${{ secrets.ECR_REGISTRY }}/frontend_intro_devops_casino:v1.0.${{ github.run_number }}
             docker stop casino_frontend || true
             docker rm casino_frontend || true
-            docker run -d --name casino_frontend -p 80:8080 ${{ secrets.ECR_REGISTRY }}/casino-frontend:v1.0.${{ github.run_number }}
+            docker run -d --name casino_frontend -p 80:8080 ${{ secrets.ECR_REGISTRY }}/frontend_intro_devops_casino:v1.0.${{ github.run_number }}
